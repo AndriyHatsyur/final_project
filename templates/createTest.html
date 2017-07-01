@@ -1,0 +1,74 @@
+{% extends "layout.html" %} {% block title%} | Create test {% endblock %} {% block content %} {% if request.path == "/create-test/new"%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 col-sm-8 offset-sm-2 admin-reg">
+            <br>
+            <p class="error">{% if error %} {{error}} {% endif %}</p>
+            <h2>Create test</h2>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Name of test</label>
+                    <input type="text" class="form-control" name="testName" placeholder="Name of test">
+                </div>
+                <div class="form-group">
+                    <label for="exampleTextarea">Description of test</label>
+                    <textarea class="form-control" name="testDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+            <br>
+            <h2>Add a question</h2>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Question</label>
+                    <textarea class="form-control" name="question" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Answer №1
+                    </label>
+                    <input type="text" class="form-control" name="answer1" placeholder="Answer №1" required>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Answer №2
+                    </label>
+                    <input type="text" class="form-control" name="answer2" placeholder="Answer №2" required>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Answer №3
+                    </label>
+                    <input type="text" class="form-control" name="answer3" placeholder="Answer №3" required>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Answer №4
+                    </label>
+                    <input type="text" class="form-control" name="answer4" placeholder="Answer №4" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelect1">№ correct answer</label>
+                    <select class="form-control" name="answer">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div class="form-group ">
+                    <label for="formGroupExampleInput ">Scores</label>
+                    <input type="text" class="form-control " name="score" placeholder="Scores" required>
+                </div>
+                <div class="form-group ">
+                    <button class="btn btn-success ">Add question</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> {% endif %} {% endblock %}

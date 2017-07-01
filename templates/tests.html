@@ -1,34 +1,26 @@
-{% extends "layout.html" %} {% block title%} | Test list {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title%} | Test list {% endblock %} {% block content %} {% if not session.user_id %}
+<div class="card">
+    <div class="card-block">
+        <center>
+            To begin the test you need to authorize.
+        </center>
+    </div>
+</div>
+<br> {% endif %}
 <div class="container-fluid about-page">
     <div class="row">
+        {% for test in tests %}
         <div class="col-sm-6 test-card">
             <div class="card">
                 <div class="card-block">
-                    <h3 class="card-title">Special title treatment</h3>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-success">Start test</a>
+                    <h3 class="card-title">{{test.name}}</h3>
+                    <p class="card-text">{{test.description}}</p>
+                    {% if session.user_id%}
+                    <a href="test/{{test.name}}" class="btn btn-success">Begin test</a> {% endif %}
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-block">
-                    <h3 class="card-title">Special title treatment</h3>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-success">Start test</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-block">
-                    <h3 class="card-title">Special title treatment</h3>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-success">Start test</a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-</div>
 </div>
 {% endblock %}
