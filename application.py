@@ -1,29 +1,33 @@
 from flask import Flask
 from flask import render_template
-import sqlite3
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def index():
-	conn = sqlite3.connect('project.db')
-	print "Opened database successfully";
 
-	conn.execute('''CREATE TABLE COMPAfffNY
-       (ID INT PRIMARY KEY     NOT NULL,
-       NAME           TEXT    NOT NULL,
-       AGE            INT     NOT NULL,
-       ADDRESS        CHAR(50) ,
-       SALARY         REAL);''')
-	print "Table created successfully";
+ 
+  return render_template('index.html')
 
-	conn.close()
-    #return render_template('index.html')
-
-@app.route('/contacts')
+@app.route('/about')
 def contacts():
-    return 'contact'
+
+  return render_template('about.html')
+
+@app.route('/test-list')
+def testsList():
+
+  return render_template('tests.html')  
+
+@app.route('/registr')
+def registr():
+
+  return render_template('registr.html') 
+
+@app.route('/login')
+def login():
+
+  return render_template('login.html')   
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

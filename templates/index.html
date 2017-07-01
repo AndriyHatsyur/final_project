@@ -1,2 +1,45 @@
-{% extends "layout.html" %} {% block content %}
-<h1>Hello world!!!</h1> {% endblock %}
+{% extends "layout.html" %} {% block title%} | Home {% endblock %} {% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-3">Simple test designer</h1>
+        <p class="lead">With TestDesigner you can create tests where the student chooses the right answers from the proposed ones.</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-block">
+                    <h3 class="card-title">For teachers</h3>
+                    <p class="card-text">
+                        <ul>
+                            <li>4 answer options</li>
+                            <li>Public and private tests</li>
+                            <li>Ability to assign points for questions</li>
+                            <li>Test progress statistics</li>
+                        </ul>
+                    </p>
+                    <a href="#" class="btn btn-success">Create test</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-block">
+                    <h3 class="card-title">For students</h3>
+                    <p class="card-text">
+                        <ul>
+                            <li>Ability to take the test at a convenient time</li>
+                            <li>Ability to independently choose public tests</li>
+                            <li>Ability to pass the test again</li>
+                            <li>History of passed tests</li>
+                        </ul>
+                    </p>
+                    </p>
+                    <a href="#" class="btn btn-success">Choose a test</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
