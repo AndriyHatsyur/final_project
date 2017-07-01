@@ -65,3 +65,8 @@ nav .button-log {
     border-radius: 4px;
     text-align: center;
 }
+
+.error {
+    color: red;
+    font-weight: lighter;
+}
