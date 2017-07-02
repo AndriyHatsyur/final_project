@@ -1,0 +1,6 @@
+{% extends "layout.html" %} {% block title%} | {{test}} result {% endblock %} {% block content %}
+<div class="container">
+    {% for h in history %} {{h.answer}} | {{h.test}}
+    <br> {% endfor %}
+</div>
+{{c}} {% endblock %}
