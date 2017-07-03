@@ -62,10 +62,11 @@ class Answer(Model):
         yield 'number', self.number
 
 class History(Model):
-    test = IntegerField()
-    questions = IntegerField()
-    answer = IntegerField()
+    test = ForeignKeyField(Test, related_name='tests')
+    question = ForeignKeyField(Questions, related_name='questions', null=True)
+    score = IntegerField(null=True)
     user = IntegerField()
+    end = BooleanField(null=True)
 
     class Meta:
         database = db 
@@ -73,3 +74,5 @@ class History(Model):
 #History.create_table()
 #Questions.create_table()
 #Answer.create_table()
+#User.create_table()
+#Test.create_table()

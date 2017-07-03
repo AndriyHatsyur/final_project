@@ -1,6 +1,19 @@
-{% extends "layout.html" %} {% block title%} | {{test}} result {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title%} | {{test.name}} result {% endblock %} {% block content %}
 <div class="container">
-    {% for h in history %} {{h.answer}} | {{h.test}}
+    <br>
+    <div class="card">
+        <div class="card-header">
+            {{test.name}} result
+        </div>
+        <div class="card-block">
+            <blockquote class="card-blockquote">
+                <p>Maximum score for the test : {{scoreTest}}</p>
+                <footer>You score points : {{scoreUser}}
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+    {% for h in history %}
     <br> {% endfor %}
 </div>
-{{c}} {% endblock %}
+{% endblock %}

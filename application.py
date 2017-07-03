@@ -199,43 +199,95 @@ def createTest(test):
 
 @app.route('/test/<name>', methods=["GET", "POST"])
 def startTest(name):
-   
-    test = Test.get(Test.name == name)
-    question = Questions.select().where(Questions.test == test, Questions.number == request.args.get("q"))
 
-    count = Questions.select().where(Questions.test == test).count()
+	if not 'user_id' in session:
+		return redirect(url_for('login'))
 
-    if int(request.args.get("q")) > count:
+	test = Test.get(Test.name == name)
 
-    	return redirect(url_for('result', test=test.name))
+	try:
+		History.get(History.test == test.id, History.user == session["user_id"], History.end == True)
+		return render_template('startTest.html', test=test, error=True)
+
+	except:	
+	    count = Questions.select().where(Questions.test == test).count()
+
+	    if int(request.args.get("q")) > count:
+
+	    	history = History.create(test = test,\
+	    							 end = True,\
+	    							 user = session["user_id"])
+	    	history.save()
+
+	    	return redirect(url_for('result', test=test.name))
+
+	    q=int(request.args.get("q"))	
+	    	
+	    if request.form.get("answer"):
+	    	score = 0
+
+	    	if int(request.form.get("answer")) == test.questions[q-1].answer:
+	    		score = test.questions[q-1].score
+
+	    	history = History.create(test = test,\
+	    							 question = test.questions[q-1],\
+	    							 score = score,\
+	    							 user = session["user_id"])
+	    	history.save()
+
+	    	return redirect(url_for('startTest', name=test.name, q=q+1))
+
+	    return render_template('startTest.html', test=test, i=q-1)
 
 
-    if request.form.get("answer"):
-    	score = 0
-
-    	if int(request.form.get("answer")) == question[0].answer:
-    		score = question[0].score
-
-    	history = History.create(test = test.id,\
-    							 questions = question[0].id,\
-    							 answer = score,\
-    							 user = session["user_id"])
-    	history.save()
-
-    	return redirect(url_for('startTest', name=test.name, q=int(request.args.get("q"))+1))
-
-    return render_template('startTest.html',question=question, test=test)
-
-
-
-@app.route('/result/<test>', methods=["GET", "POST"])
+@app.route('/result/<test>')
 def result(test):
 
-	test = Test.get(Test.name == test)
+	if not 'user_id' in session:
+		return redirect(url_for('login'))
 
-	history = History.select().where(History.test == test.id, History.user == session["user_id"] )
+	test_ = Test.get(Test.name == test)
 
-	return render_template('result.html', test=test , history=history)
+	history = History.select().where(History.test == test_, History.user == session["user_id"])
+
+	scoreTest = 0
+	scoreUser = 0
+	for h in history:
+		if h.question:
+
+			scoreTest = scoreTest + h.question.score
+
+			scoreUser= scoreUser + h.score
+
+	return render_template('result.html', test=test_ , history=history, scoreTest=scoreTest, scoreUser=scoreUser)
+
+
+@app.route('/history/<test>')
+def history(test):
+
+	if not 'user_id' in session:
+		return redirect(url_for('login'))
+
+	if test == 'all':
+		history = History.select(History.test).distinct().where(History.user == session["user_id"])
+
+	else:
+
+		test_ = Test.get(Test.name == test)
+		history = History.select().where(History.test == test_, History.user == session["user_id"])
+
+		scoreTest = 0
+		scoreUser = 0
+		for h in history:
+			if h.question:
+
+				scoreTest = scoreTest + h.question.score
+
+				scoreUser= scoreUser + h.score
+		return render_template('history.html', test=test , history=history, scoreTest=scoreTest, scoreUser=scoreUser)		
+
+	return render_template('history.html', history=history, test=test)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

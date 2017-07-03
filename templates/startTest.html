@@ -1,14 +1,15 @@
-{% extends "layout.html" %} {% block title%} | {{question[0].description}} {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title%} | {{test.name}} {% endblock %} {% block content %}
 <div class="container">
+    {% if not error %}
     <br>
     <div class="card">
         <div class="card-header">
-            {{question[0].description}}
+            {{test.questions[i].description}}
         </div>
         <div class="card-block">
             <blockquote class="card-blockquote">
                 <form action="" method="post">
-                    {% for q in question[0].answers %}
+                    {% for q in test.questions[i].answers %}
                     <div class="form-check">
                         <label class="form-check-label">
                             <input class="form-check-input" type="radio" name="answer" value="{{q.number}}"> {{q.description}}
@@ -21,5 +22,10 @@
             </blockquote>
         </div>
     </div>
+    {% else %}
+    <br>
+    <div class="alert alert-warning" role="alert">
+        <strong>Sorry</strong> , but you have already passed this test. {% endif %}
+    </div>
 </div>
-{{c}} {% endblock %}
+{% endblock %}

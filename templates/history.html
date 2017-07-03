@@ -1,0 +1,32 @@
+{% extends "layout.html" %} {% block title%} | History {% endblock %} {% block content %}
+<div class="container">
+    {% if test == 'all' %}
+    <br>
+    <center>
+        <h2>History</h2></center>
+    <ul class="list-group">
+        {% for h in history %}
+        <a href="{{h.test.name}}" class="list-group-item list-group-item-action">{{h.test.name}}</a> {% endfor %}
+    </ul>
+    {% else %}
+    <br>
+    <center>
+        <h2>History {{test}}</h2></center>
+    <div class="card">
+        <div class="card-block">
+            <p>Maximum score for the test : {{scoreTest}}</p>
+            <footer>You score points : {{scoreUser}}
+            </footer>
+        </div>
+    </div>
+    <ul class="list-group">
+        {% for h in history %} {% if h.score > 0 %}
+        <li class="list-group-item list-group-item-success">{{h.question.description}}</li>
+        {% elif h.score == 0 %}
+        <li class="list-group-item list-group-item-danger">{{h.question.description}}</li>
+        {% endif %} {% endfor %}
+    </ul>
+</div>
+{% endif %}
+</div>
+{% endblock %}
